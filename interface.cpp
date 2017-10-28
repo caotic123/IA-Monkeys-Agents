@@ -1,25 +1,6 @@
-// Interface cronstrution for the IA GRAPHICS
-// Of Tiago for the World
+#include "interface.h"
 
-#include <windows.h>
-#include <iostream>
-#include "SDL.h"
-#include <SDL2\SDL_image.h>
-#include <SDL2\SDL_ttf.h>
-#undef main
-
-// Graphics
-#define square_space_x 40
-#define square_space_y 20
-
-typedef struct {
-  int x;
-  int y;
-} pos;
-
-class interface_ {
- public:
-  void init_(int LEN_x___, int LEN_y___) {
+  void interface_::init_(int LEN_x___, int LEN_y___) {
     LEN_x = LEN_x___;
     LEN_y = LEN_y___;
     int subSizeX = (LEN_x * square_space_x) / 3;
@@ -58,8 +39,8 @@ class interface_ {
     clean___();
     SDL_RenderPresent(m_renderer);
   }
-
-  void ___print(std::string str) {
+  
+   void interface_::___print(std::string str) {
     SDL_Color black_ = {255, 255, 255};
     TTF_Font *___font = TTF_OpenFont("resource\\font.ttf", 14);
     if (___font == NULL) {
@@ -80,8 +61,8 @@ class interface_ {
     SDL_RenderPresent(m_renderer);
     __i = __i + 1;
   }
-  
- void ___print_square(pos pos_, std::string str) {
+
+ void interface_::___print_square(pos pos_, std::string str) {
     SDL_Color black_ = {255, 255, 255};
     SDL_Rect Message_rect;
     
@@ -106,7 +87,7 @@ class interface_ {
     SDL_RenderPresent(renderer);
   }
 
-  void ___print__floor(int i, pos pos_) {
+  void interface_::___print__floor(int i, pos pos_) {
     int c = 0, b = 0, z = 0;
     DestR.x = pos_.x * square_space_x;
     DestR.y = pos_.y * square_space_y;
@@ -132,12 +113,12 @@ class interface_ {
     SDL_RenderPresent(renderer);
   }
 
-  void close___() {
+  void interface_::close___() {
     SDL_DestroyWindow(window);
     SDL_DestroyWindow(m_window);
   }
 
-  void wait_and_continue() {
+  void interface_::wait_and_continue() {
     x__ = true;
 
     for (int i = 0; i <= (LEN_y - 1); i++) {
@@ -163,7 +144,7 @@ class interface_ {
     clean___();
   }
 
-  void __image(int p_, pos pos_, int number) {
+  void interface_::__image(int p_, pos pos_, int number) {
     int c = 0, b = 0, z = 255;
     char sd[100] = "resource\\";
     char buffer[100];
@@ -205,7 +186,7 @@ class interface_ {
    ___print_square(pos__, std::string(buffer));
   }
 
-  void clean___() {
+  void interface_::clean___() {
     SDL_DestroyTexture(Message);
     SDL_DestroyRenderer(renderer);
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -218,7 +199,7 @@ class interface_ {
     __i = 0;
   }
 
-  void clean_m() {
+  void interface_::clean_m() {
     SDL_DestroyTexture(Message);
     SDL_DestroyRenderer(m_renderer);
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
@@ -226,23 +207,4 @@ class interface_ {
     SDL_RenderClear(m_renderer);
     SDL_RenderPresent(renderer);
   }
-
-  SDL_Surface *screen;
-  SDL_Window *window;
-  SDL_Window *m_window;
-  SDL_Surface *image;
-  SDL_Renderer *renderer;
-  SDL_Renderer *m_renderer;
-  SDL_Texture *texture = NULL;
-  SDL_Surface *surfaceMessage;
-  SDL_Texture *Message;
-  SDL_Surface *surfaceMessage_;
-  SDL_Texture *Message_;
-  SDL_Event evt;
-  SDL_Rect SrcR;
-  SDL_Rect DestR;
-  int __i;
-  bool x__;
-  int LEN_x;
-  int LEN_y;
-};
+  
