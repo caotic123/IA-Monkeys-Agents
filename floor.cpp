@@ -16,6 +16,7 @@
 
     void floor__::__insert(b m, pos pos_)
     {
+    	std::cout << "ola" << std::endl;
         memcpy(&f[pos_.x][pos_.y].b_, &m, sizeof(m));
     }
 
@@ -68,7 +69,6 @@
 
     void floor__::remove___m(m_* m, pos pos_)
     {
-        m->set_king(false);
         f[pos_.x][pos_.y].a_s.remove(m);
         f[pos_.x][pos_.y]._ = f[pos_.x][pos_.y]._ - 1;
     }

@@ -33,6 +33,8 @@ public:
     bool is_dif_pos(pos pos_, pos _pos);
     pos less_monkey_pos(m_ m__);
     m_* more__distance___m(int area_view);
+    m_* m_alert(m_* sender, int area_x, int area_y, bool print_);
+    m_* m_prey(pos prey_pos, int area_x, int area_y);
     void s__p_As(m_* m__, pos pos_);
     void init__floor();
     void set___graphics_(interface_* x);
