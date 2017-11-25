@@ -16,7 +16,6 @@
 
     void floor__::__insert(b m, pos pos_)
     {
-    	std::cout << "ola" << std::endl;
         memcpy(&f[pos_.x][pos_.y].b_, &m, sizeof(m));
     }
 
