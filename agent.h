@@ -11,8 +11,6 @@ void init_agent();
 void set__dir_vect(int x, int y);
 int add___x(int sx, b p_);
 int x_get(b p_);
-void set_king(bool b = true);
-bool is_king();
 pos getp_P();
 float get_y(int n, int y);
 void setPos(pos x);
@@ -23,7 +21,6 @@ double** m;
 pos pos_;
 int* d_;
 bool d;
-bool k_;
 };
 
 typedef struct {
@@ -60,6 +57,7 @@ int tree_x;
 int tree_y;
 floor_** f;
 int* d;
+std::list<int> f_;
 };
 
 #endif

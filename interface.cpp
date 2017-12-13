@@ -106,6 +106,11 @@
     b = 6;
     z = 8;	
    }
+   else if (i > 2) {
+    c = i;
+    b = 136;
+    z = 134;	
+   }
 
     SDL_SetRenderDrawColor(renderer, c, b, z, 255);
     SDL_RenderFillRect(renderer, &DestR);

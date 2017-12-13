@@ -19,7 +19,6 @@
 class AI {
 public:
     void init___p(int a___, int agents_, int ra_, int rb_, int predator_____, bool graphics);
-    pos m_to_tree(m_* m);
     void interact___();
     void ____realloc();
     bool check____f(int x, int y);
@@ -38,6 +37,7 @@ public:
     void s__p_As(m_* m__, pos pos_);
     void init__floor();
     void set___graphics_(interface_* x);
+    void createAlert(m_* m);
     template <typename T>
     void _statistics(T buf, bool t);
     

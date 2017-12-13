@@ -54,14 +54,26 @@ void AI::init___p(int a___, int agents_, int ra_, int rb_, int predator_____,
     }
 }
 
-pos AI::m_to_tree(m_* m)
-{
-    pos pos_ = m->getp_P();
-    if (!f_x->check_tree(m->getp_P())) {
-        pos_.x = f_x->d__(m->getp_P().x, m->getp_P().y, f_x->get_lower_pos_of_tree(m->getp_P()).x, f_x->get_lower_pos_of_tree(m->getp_P()).y)[0];
-        pos_.y = f_x->d__(m->getp_P().x, m->getp_P().y, f_x->get_lower_pos_of_tree(m->getp_P()).x, f_x->get_lower_pos_of_tree(m->getp_P()).y)[1];
-    }
-    return pos_;
+void AI::createAlert(m_* m) {
+	pos pos_ = m->getp_P();
+	int __alert = 30;
+	int l;
+	int x_ = m->getp_P().x, y_ = m->getp_P().y;
+	for (int i= (__alert/2); i >= -(__alert/2); i--) { // (-2+2)+1 = 1 -
+	  for (int _= (1 * (((i * (0-i))+(__alert/2)+1)/2)); _ >= (-1 * (((i * (0-i))+(__alert/2)+1)/2)); _--) {
+	      if (pos_.x+_ < LEN_x && pos_.y+i < LEN_y && pos_.x+_ >= 0 && pos_.y+i  >= 0) {
+	  	    pos_.x = pos_.x+_;
+	  	    pos_.y = pos_.y+i;
+	  	    if (screen && f_x->getM_s(pos_) < 1 && !check____f(pos_.x, pos_.y)) {
+	  	    l = (((pos_.x - x_) > 0) ? (pos_.x - x_) : ((pos_.x - x_) * -1)) + (((pos_.y - y_) > 0) ? (pos_.y - y_) : ((pos_.y - y_) * -1));
+	  	      ___screen->___print__floor(100+((l^3)*l), pos_);
+	  	    }
+	  	    
+	  	   pos_.x = pos_.x-_;
+	  	   pos_.y = pos_.y-i;
+	     }
+	  }
+   }
 }
 
 void AI::interact___()
@@ -69,27 +81,6 @@ void AI::interact___()
     pos pos_;
     int i = 0;
     std::list<m_*> list_;
-    m_* m_king;
-    if (get_king() != NULL && f_x->check_tree(get_king()->getp_P())) {
-        m_king = get_king();
-        if (screen) {
-            ___screen->__image(4, m_king->getp_P(), f_x->getM_s(m_king->getp_P()));
-        }
-    }
-    else {
-        if (get_king() != NULL) {
-            get_king()->set_king(false);
-        }
-        m_king = more__distance___m((area_view / vision_tree) * 2); //(area_view/vision_tree)*2
-
-        if (m_king != NULL) {
-            m_king->set_king();
-            if (screen) {
-                ___screen->__image(4, m_king->getp_P(), f_x->getM_s(m_king->getp_P()));
-            }
-        }
-    }
-
     for (int x = 0; x <= (LEN_x - 1); x++) {
         for (int y = 0; y <= (LEN_y - 1); y++) {
             pos_.x = x;
@@ -124,7 +115,6 @@ void AI::____realloc()
     pos pos_;
     int* pos_i;
     int* d;
-    m_* m_king_ = get_king();
     pos __pos;
     pos back_pos;
     m_* prey__m = NULL;
@@ -137,8 +127,6 @@ void AI::____realloc()
         ___screen->clean_m();
     }
 
-    system("cls");
-    prepare_monkey_pos();
     for (int x = 0; x <= (LEN_x - 1); x++) {
         for (int y = 0; y <= (LEN_y - 1); y++) {
             if (check____f(x, y)) {
@@ -176,21 +164,8 @@ void AI::____realloc()
     }
 
     for (int i = 0; i <= (agents - 1); i++) {
-        if ((m_king_ != NULL && m_king_->____id == m___[i].____id)) {
-            pos_ = m_to_tree(m_king_);
-        }
-        else {
-            if (m_king_ != NULL) {
-                __pos = map_pos[m___[i].____id];
-                d = f_x->d__(m___[i].getp_P().x, m___[i].getp_P().y, __pos.x, __pos.y);
-                pos_.x = d[0];
-                pos_.y = d[1];
-            }
-            else {
-                pos_ = f_x->pos__(m___[i].getp_P().x, m___[i].getp_P().y, LEN_x - 1, LEN_y - 1);
-            }
-        }
-
+        pos_ = f_x->pos__(m___[i].getp_P().x, m___[i].getp_P().y, LEN_x - 1, LEN_y - 1);
+        
         if (check____f(pos_.x, pos_.y)) {
             pos_ = m___[i].getp_P(); // stay stopped
         }
@@ -233,49 +208,6 @@ m_* AI::getMbyId(int i)
     return NULL;
 }
 
-void AI::prepare_monkey_pos()
-{
-    m_* m_king = get_king();
-    m_* last_m = m_king;
-    m_* re_m;
-    int x_ = 0, y_ = 0;
-    if (m_king == NULL) {
-        return;
-    }
-    int _ = LEN_x * LEN_y;
-    int c_;
-    pos pos_;
-    pos_.x = m_king->getp_P().x;
-    pos_.y = m_king->getp_P().y;
-    std::list<int> lis__;
-    std::list<m_*> iter_m;
-    map_pos.clear();
-
-    for (int i_ = 0; i_ <= (agents - 1); i_++) {
-        lis__.push_back(i_);
-    }
-
-    while (lis__.size() > 1) {
-        for (int i = 0; i <= (agents - 1); i++) {
-            x_ = m___[i].getp_P().x;
-            y_ = m___[i].getp_P().y;
-            c_ = ((pos_.x - x_) < 0 ? ((pos_.x - x_) * -1) : (pos_.x - x_)) + ((pos_.y - y_) < 0 ? ((pos_.y - y_) * -1) : (pos_.y - y_));
-            if (get_search(lis__, m___[i].____id) && m___[i].____id != last_m->____id) {
-                if (c_ < _) {
-                    _ = c_;
-                    re_m = &m___[i];
-                }
-            }
-        }
-
-        map_pos[re_m->____id] = last_m->getp_P();
-        lis__.remove(last_m->____id);
-        last_m = re_m;
-        pos_ = last_m->getp_P();
-        _ = LEN_x * LEN_y;
-    }
-}
-
 void AI::alert____(m_* _m, b _, int x_, int y_)
 {
     pos pos_;
@@ -286,16 +218,6 @@ void AI::alert____(m_* _m, b _, int x_, int y_)
     if (s != NULL) {
 	    e[s->add___x(_m->x_get(_), _)] += 1;
     }
-}
-
-m_* AI::get_king()
-{
-    for (int i = 0; i <= (agents - 1); i++) {
-        if (m___[i].is_king()) {
-            return &m___[i];
-        }
-    }
-    return NULL;
 }
 
 int AI::distance__(pos s, pos y)
@@ -457,8 +379,9 @@ void AI::s__p_As(m_* m__, pos pos_)
                 if (check____f(x, y)) {
                     b__.x = x;
                     b__.y = y;
-                    alert____(m__, f_x->b_get___b(b__), m__->getp_P().x,
-                        m__->getp_P().y);
+                    createAlert(m__);
+       //             alert____(m__, f_x->b_get___b(b__), m__->getp_P().x,
+    //                 m__->getp_P().y);
                 }
             }
         }

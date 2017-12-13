@@ -5,7 +5,6 @@
         m = (double**)malloc(sizeof(double*) * S - 1);
         d_ = (int*)malloc(sizeof(int) * 3);
         d = false;
-        k_ = false;
         for (int i = 0; i <= (S - 1); i++) {
             m[i] = (double*)malloc(sizeof(double) * 3);
             for (int x = 0; x <= 2; x++) {
@@ -38,16 +37,6 @@
             }
         }
         return i;
-    }
-
-    void m_::set_king(bool b)
-    {
-        k_ = b;
-    }
-
-    bool m_::is_king()
-    {
-        return k_;
     }
 
     pos m_::getp_P() { return pos_; }
