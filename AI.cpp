@@ -59,7 +59,7 @@ void AI::createAlert(m_* m) {
 	int __alert = 30;
 	int l;
 	int x_ = m->getp_P().x, y_ = m->getp_P().y;
-	for (int i= (__alert/2); i >= -(__alert/2); i--) { // (-2+2)+1 = 1 -
+	for (int i= (__alert/2); i >= -(__alert/2); i--) {
 	  for (int _= (1 * (((i * (0-i))+(__alert/2)+1)/2)); _ >= (-1 * (((i * (0-i))+(__alert/2)+1)/2)); _--) {
 	      if (pos_.x+_ < LEN_x && pos_.y+i < LEN_y && pos_.x+_ >= 0 && pos_.y+i  >= 0) {
 	  	    pos_.x = pos_.x+_;
